@@ -1,0 +1,10 @@
+var _User = require('./User');
+var _Company = require('./Company');
+var _CustomMap = require('./CustomMap');
+const user = new _User.User();
+const company = new _Company.Company();
+// create instance of CustomMap
+const customMap = new _CustomMap.CustomMap('map');
+// calling a constructor
+customMap.addMarker(user);
+customMap.addMarker(company);

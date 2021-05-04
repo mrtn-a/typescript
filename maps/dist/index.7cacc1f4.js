@@ -444,19 +444,16 @@ id) /*: string*/
 },{}],"3rfh7":[function(require,module,exports) {
 var _User = require('./User');
 var _Company = require('./Company');
+var _CustomMap = require('./CustomMap');
 const user = new _User.User();
-console.log(user);
 const company = new _Company.Company();
-console.log(company);
-new google.maps.Map(document.getElementById('map'), {
-  zoom: 1,
-  center: {
-    lat: 0,
-    lng: 0
-  }
-});
+// create instance of CustomMap
+const customMap = new _CustomMap.CustomMap('map');
+// calling a constructor
+customMap.addMarker(user);
+customMap.addMarker(company);
 
-},{"./User":"3qrOS","./Company":"4LFTX"}],"3qrOS":[function(require,module,exports) {
+},{"./User":"3qrOS","./Company":"4LFTX","./CustomMap":"4C18S"}],"3qrOS":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "User", function () {
@@ -14776,7 +14773,7 @@ module["exports"] = [
   "Nám. Před Bateriemi",
   "Nám. Republiky",
   "Nám. Smiřických",
-  "Nám. Svatopluka Čecha",
+  "N��m. Svatopluka Čecha",
   "Nám. Svobody",
   "Nám. U Lva",
   "Nám. U Lípy Svobody",
@@ -18452,7 +18449,7 @@ module["exports"] = [
   "Řešovská",
   "Řipská",
   "Řipská",
-  "Ř��snovka",
+  "Řásnovka",
   "Říjnová",
   "Římovská",
   "Římovská",
@@ -77576,9 +77573,9 @@ module["exports"] = [
   "კურტანოვსკის",
   "კუტუზოვის",
   "ლაღიძის",
-  "ლელაშვილის",
+  "ლ���ლაშვილის",
   "ლენინაშენის",
-  "ლე��ინგრადის",
+  "ლენინგრადის",
   "ლენინის",
   "ლენის",
   "ლეონიძის",
@@ -81038,7 +81035,7 @@ module["exports"] = [
   'Arc',
   'Ardalić',
   'Arežina',
-  'Arhani��',
+  'Arhanić',
   'Arić',
   'Arlavi',
   'Arlov',
@@ -137288,6 +137285,34 @@ class Company {
   }
 }
 
-},{"faker":"4IhlT","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
+},{"faker":"4IhlT","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4C18S":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "CustomMap", function () {
+  return CustomMap;
+});
+class CustomMap {
+  // instance of the class
+  constructor(divId) {
+    this.googleMap = new google.maps.Map(document.getElementById(divId), {
+      zoom: 1,
+      center: {
+        lat: 0,
+        lng: 0
+      }
+    });
+  }
+  addMarker(mappable) {
+    new google.maps.Marker({
+      map: this.googleMap,
+      position: {
+        lat: mappable.location.lat,
+        lng: mappable.location.lng
+      }
+    });
+  }
+}
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
 
 //# sourceMappingURL=index.7cacc1f4.js.map
