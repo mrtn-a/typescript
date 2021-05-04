@@ -1,0 +1,18 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "User", function () {
+  return User;
+});
+var _faker = require('faker');
+var _fakerDefault = _parcelHelpers.interopDefault(_faker);
+class User {
+  // initialise:
+  constructor() {
+    this.name = _fakerDefault.default.name.firstName();
+    // need to initialise te location object and its properties
+    this.location = {
+      lat: parseFloat(_fakerDefault.default.address.latitude()),
+      lng: parseFloat(_fakerDefault.default.address.longitude())
+    };
+  }
+}

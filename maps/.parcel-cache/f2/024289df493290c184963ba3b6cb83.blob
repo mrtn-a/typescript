@@ -1,0 +1,8 @@
+<html>  
+  <body>
+    <div id="map" style="height: 100%;
+"></div> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNLrJhOMz6idD05pzfn5lhA-TAw-mAZCU"></script>
+    <script src="/index.HASH_REF_043affa210fd5d10be6d99797cacc1f4.js"></script>
+  </body>
+</html>
