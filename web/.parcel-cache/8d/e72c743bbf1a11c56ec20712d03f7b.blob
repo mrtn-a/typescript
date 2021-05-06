@@ -456,9 +456,7 @@ _parcelHelpers.export(exports, "User", function () {
 });
 var _axios = require('axios');
 var _axiosDefault = _parcelHelpers.interopDefault(_axios);
-var _Eventing = require('./Eventing');
 class User {
-  events = new _Eventing.Eventing();
   constructor(data) {
     this.data = data;
   }
@@ -486,7 +484,7 @@ class User {
   }
 }
 
-},{"axios":"7rA65","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","./Eventing":"4MHiY"}],"7rA65":[function(require,module,exports) {
+},{"axios":"7rA65","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 },{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
 'use strict';
@@ -2273,33 +2271,6 @@ exports.export = function (dest, destName, get) {
     get: get
   });
 };
-},{}],"4MHiY":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "Eventing", function () {
-  return Eventing;
-});
-class Eventing {
-  // object event of strings
-  events = {};
-  on = (eventName, callback) => {
-    const handlers = this.events[eventName] || [];
-    handlers.push(callback);
-    this.events[eventName] = handlers;
-  };
-  trigger = eventName => {
-    const handlers = this.events[eventName];
-    // if handler is undefined or there's no handlers
-    if (!handlers || handlers.length === 0) {
-      return;
-    }
-    // if there are handlers
-    handlers.forEach(callback => {
-      callback();
-    });
-  };
-}
+},{}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
 
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
-
-//# sourceMappingURL=index.7cacc1f4.js.map
+//# sourceMappingURL=index.HASH_REF_043affa210fd5d10be6d99797cacc1f4.js.map
