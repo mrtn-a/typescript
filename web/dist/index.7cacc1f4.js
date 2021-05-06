@@ -442,13 +442,65 @@ id) /*: string*/
 }
 
 },{}],"3rfh7":[function(require,module,exports) {
-var _axios = require('axios');
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-var _axiosDefault = _parcelHelpers.interopDefault(_axios);
-_axiosDefault.default.post('http://localhost:3000/users', {
-  name: 'myname',
-  age: 20
+var _modelsUser = require('./models/User');
+const user = new _modelsUser.User({
+  id: 1
 });
+user.fetch();
+
+},{"./models/User":"5y4Kz"}],"5y4Kz":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "User", function () {
+  return User;
+});
+var _axios = require('axios');
+var _axiosDefault = _parcelHelpers.interopDefault(_axios);
+class User {
+  // object event of strings
+  events = {};
+  constructor(data) {
+    this.data = data;
+  }
+  get(propName) {
+    return this.data[propName];
+  }
+  set(update) {
+    Object.assign(this.data, update);
+  }
+  on(eventName, callback) {
+    const handlers = this.events[eventName] || [];
+    handlers.push(callback);
+    this.events[eventName] = handlers;
+  }
+  trigger = eventName => {
+    const handlers = this.events[eventName];
+    // if handler is undefined or there's no handlers
+    if (!handlers || handlers.length === 0) {
+      return;
+    }
+    // if there are handlers
+    handlers.forEach(callback => {
+      callback();
+    });
+  };
+  fetch() {
+    _axiosDefault.default.get(`http://localhost:3000/users/${this.get('id')}`).then(response => {
+      this.set(response.data);
+    });
+  }
+  save() {
+    // extract id
+    const id = this.get('id');
+    if (id) {
+      // put
+      _axiosDefault.default.put(`http://localhost:3000/users/${id}`, this.data);
+    } else {
+      // no user yet; post
+      _axiosDefault.default.post('http://localhost:3000/users', this.data);
+    }
+  }
+}
 
 },{"axios":"7rA65","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
