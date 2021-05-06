@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CvsFileReader = void 0;
+exports.CsvFileReader = void 0;
 var fs_1 = __importDefault(require("fs"));
-var CvsFileReader = /** @class */ (function () {
-    function CvsFileReader(filename) {
+var CsvFileReader = /** @class */ (function () {
+    function CsvFileReader(filename) {
         this.filename = filename;
         this.data = [];
     }
-    CvsFileReader.prototype.read = function () {
+    CsvFileReader.prototype.read = function () {
         this.data = fs_1.default
             .readFileSync(this.filename, {
             encoding: 'utf-8',
@@ -20,6 +20,6 @@ var CvsFileReader = /** @class */ (function () {
             return row.split(',');
         });
     };
-    return CvsFileReader;
+    return CsvFileReader;
 }());
-exports.CvsFileReader = CvsFileReader;
+exports.CsvFileReader = CsvFileReader;
