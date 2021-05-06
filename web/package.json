@@ -1,5 +1,12 @@
 {
   "devDependencies": {
     "parcel": "^2.0.0-beta.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
+  },
+  "scripts": {
+    "start:db": "json-server -w db.json",
+    "start:parcel": "parcel index.html"
   }
 }
