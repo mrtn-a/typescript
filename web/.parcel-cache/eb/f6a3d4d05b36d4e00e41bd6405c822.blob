@@ -443,7 +443,7 @@ id) /*: string*/
 
 },{}],"3rfh7":[function(require,module,exports) {
 var _modelsUser = require('./models/User');
-const user = _modelsUser.User.buildUser({
+const user = new _modelsUser.User({
   id: 1
 });
 user.on('change', () => {
@@ -2372,4 +2372,4 @@ module.exports = function isAxiosError(payload) {
 
 },{}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
 
-//# sourceMappingURL=index.7cacc1f4.js.map
+//# sourceMappingURL=index.HASH_REF_043affa210fd5d10be6d99797cacc1f4.js.map
