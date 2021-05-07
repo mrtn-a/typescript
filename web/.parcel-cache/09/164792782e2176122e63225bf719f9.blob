@@ -493,8 +493,6 @@ class User {
   save() {
     this.sync.save(this.attributes.getAll()).then(response => {
       this.trigger('save');
-    }).catch(() => {
-      this.trigger('error');
     });
   }
 }
@@ -2364,4 +2362,4 @@ class Attributes {
 
 },{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
 
-//# sourceMappingURL=index.7cacc1f4.js.map
+//# sourceMappingURL=index.HASH_REF_043affa210fd5d10be6d99797cacc1f4.js.map

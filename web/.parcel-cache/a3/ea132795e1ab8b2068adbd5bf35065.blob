@@ -490,13 +490,6 @@ class User {
       this.set(response.data);
     });
   }
-  save() {
-    this.sync.save(this.attributes.getAll()).then(response => {
-      this.trigger('save');
-    }).catch(() => {
-      this.trigger('error');
-    });
-  }
 }
 
 },{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","./Eventing":"4MHiY","./Sync":"2K0Z5","./Attributes":"2VzYh"}],"5gA8y":[function(require,module,exports) {
@@ -2357,11 +2350,8 @@ class Attributes {
   set(update) {
     Object.assign(this.data, update);
   }
-  getAll() {
-    return this.data;
-  }
 }
 
 },{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
 
-//# sourceMappingURL=index.7cacc1f4.js.map
+//# sourceMappingURL=index.HASH_REF_043affa210fd5d10be6d99797cacc1f4.js.map

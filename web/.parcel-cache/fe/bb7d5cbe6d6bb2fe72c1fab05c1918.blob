@@ -444,13 +444,15 @@ id) /*: string*/
 },{}],"3rfh7":[function(require,module,exports) {
 var _modelsUser = require('./models/User');
 const user = new _modelsUser.User({
-  id: 1
+  name: 'marty',
+  age: 12
 });
 user.on('change', () => {
-  console.log(user);
+  console.log('user was changed');
 });
-// user.set({ name: 'new namee' });
-user.fetch();
+user.set({
+  name: 'new namee'
+});
 
 },{"./models/User":"5y4Kz"}],"5y4Kz":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
@@ -487,14 +489,7 @@ class User {
       throw new Error('Cannot fetch without an id');
     }
     this.sync.fetch(id).then(response => {
-      this.set(response.data);
-    });
-  }
-  save() {
-    this.sync.save(this.attributes.getAll()).then(response => {
-      this.trigger('save');
-    }).catch(() => {
-      this.trigger('error');
+      this.attributes.set(response.data);
     });
   }
 }
@@ -2357,11 +2352,8 @@ class Attributes {
   set(update) {
     Object.assign(this.data, update);
   }
-  getAll() {
-    return this.data;
-  }
 }
 
 },{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
 
-//# sourceMappingURL=index.7cacc1f4.js.map
+//# sourceMappingURL=index.HASH_REF_043affa210fd5d10be6d99797cacc1f4.js.map
