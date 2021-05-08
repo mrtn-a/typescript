@@ -442,17 +442,13 @@ id) /*: string*/
 }
 
 },{}],"3rfh7":[function(require,module,exports) {
-var _modelsCollection = require('./models/Collection');
 var _modelsUser = require('./models/User');
-const users = new _modelsCollection.Collection('http://localhost:3000/users', json => {
-  return _modelsUser.User.buildUser(json);
+const collection = new _modelsUser.User.buildUserCollection();
+collection.on('change', () => {
+  console.log(collection);
 });
-users.on('change', () => {
-  const root = document.getElementById('root');
-});
-users.fetch();
 
-},{"./models/User":"5y4Kz","./models/Collection":"2s8AK"}],"5y4Kz":[function(require,module,exports) {
+},{"./models/User":"5y4Kz"}],"5y4Kz":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "User", function () {
@@ -623,7 +619,7 @@ class ApiSync {
       // put
       return _axiosDefault.default.put(`${this.rootUrl}/${id}`, data);
     } else {
-      // no user yet, psot
+      // no user yet; post
       return _axiosDefault.default.post(this.rootUrl, data);
     }
   }
@@ -2408,4 +2404,4 @@ class Collection {
 
 },{"axios":"7rA65","./Eventing":"4MHiY","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4UKJc","3rfh7"], "3rfh7", "parcelRequire427e")
 
-//# sourceMappingURL=index.7cacc1f4.js.map
+//# sourceMappingURL=index.HASH_REF_043affa210fd5d10be6d99797cacc1f4.js.map

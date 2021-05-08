@@ -14,11 +14,12 @@ export class ApiSync<T extends HasId> {
   save(data: T): AxiosPromise {
     // extract id
     const { id } = data;
+
     if (id) {
       // put
       return axios.put(`${this.rootUrl}/${id}`, data);
     } else {
-      // no user yet; post
+      // no user yet, psot
       return axios.post(this.rootUrl, data);
     }
   }

@@ -1,25 +1,24 @@
-// type allias
-type Callback = () => void;
-
-export class Eventing {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Eventing", function () {
+  return Eventing;
+});
+class Eventing {
   // object event of strings
-  events: { [key: string]: Callback[] } = {};
-
-  on = (eventName: string, callback: Callback): void => {
+  events = {};
+  on = (eventName, callback) => {
     const handlers = this.events[eventName] || [];
     handlers.push(callback);
     this.events[eventName] = handlers;
   };
-
-  trigger = (eventName: string): void => {
+  trigger = eventName => {
     const handlers = this.events[eventName];
     // if handler is undefined or there's no handlers
     if (!handlers || handlers.length === 0) {
       return;
     }
-
     // if there are handlers
-    handlers.forEach((callback) => {
+    handlers.forEach(callback => {
       callback();
     });
   };

@@ -1,0 +1,5 @@
+var _modelsUser = require('./models/User');
+const collection = _modelsUser.User.buildUserCollection();
+collection.on('change', () => {
+  console.log(collection);
+});
