@@ -442,39 +442,91 @@ id) /*: string*/
 }
 
 },{}],"3rfh7":[function(require,module,exports) {
-var _modelsCollection = require('./models/Collection');
+var _viewsUserForm = require('./views/UserForm');
 var _modelsUser = require('./models/User');
-const users = new _modelsCollection.Collection('http://localhost:3000/users', json => {
-  return _modelsUser.User.buildUser(json);
+const user = _modelsUser.User.buildUser({
+  name: 'NAME',
+  age: 21
 });
-users.on('change', () => {
-  const root = document.getElementById('root');
-});
-users.fetch();
+const root = document.getElementById('root');
+if (root) {
+  const userForm = new _viewsUserForm.UserForm(root, user);
+  userForm.render();
+} else {
+  throw new Error('Root element not found');
+}
 
-},{"./models/User":"5y4Kz","./models/Collection":"2s8AK"}],"5y4Kz":[function(require,module,exports) {
+},{"./views/UserForm":"77ALS","./models/User":"5y4Kz"}],"77ALS":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "User", function () {
-  return User;
+_parcelHelpers.export(exports, "UserForm", function () {
+  return UserForm;
 });
-var _Model = require('./Model');
-var _Attributes = require('./Attributes');
-var _ApiSync = require('./ApiSync');
-var _Eventing = require('./Eventing');
-var _Collection = require('./Collection');
-const rootUrl = 'http://localhost:3000/users';
-class User extends _Model.Model {
-  // pre configured version of the user
-  static buildUser(attrs) {
-    return new User(new _Attributes.Attributes(attrs), new _Eventing.Eventing(), new _ApiSync.ApiSync(rootUrl));
+class UserForm {
+  constructor(parent, model) {
+    this.parent = parent;
+    this.model = model;
+    this.bindModel();
   }
-  static buildUserCollection() {
-    return new _Collection.Collection(rootUrl, json => User.buildUser(json));
+  bindModel() {
+    this.model.on('change', () => {
+      this.render();
+    });
+  }
+  /*[key: string]: value: function that takes no arg and returns nothing*/
+  eventsMap() {
+    return {
+      'click:.set-age': this.onSetAgeClick,
+      'click:.set-name': this.onSetNameClick
+    };
+  }
+  onSetAgeClick = () => {
+    this.model.setRandomAge();
+  };
+  onSetNameClick = () => {
+    this.parent.querySelector('input');
+    if (input) {
+      const name = input.value;
+      this.model.set({
+        name
+      });
+    }
+  };
+  template() {
+    return `
+      <div>
+        <h1>User Form</h1>
+        <div>User name: ${this.model.get('name')}</div>
+        <div>User age: ${this.model.get('age')}</div>
+        <input />
+        <button class="set-name">Change name</button>
+        <button class="set-age">Set random age</button>
+      </div>
+    `;
+  }
+  /*frament -> reference to all the html we are trying to get ready to be inserting into the DOM*/
+  bindEvents(fragment) {
+    const eventsMap = this.eventsMap();
+    // iterate over key-values pairs
+    for (let eventKey in eventsMap) {
+      // destructure to get the 1st and 2nd value of the array
+      const [eventName, selector] = eventKey.split(':');
+      fragment.querySelectorAll(selector).forEach(element => {
+        element.addEventListener(eventName, eventsMap[eventKey]);
+      });
+    }
+  }
+  render() {
+    // empty out parent element so we update and replace the html
+    this.parent.innerHTML = '';
+    const templateElement = document.createElement('template');
+    templateElement.innerHTML = this.template();
+    this.bindEvents(templateElement.content);
+    this.parent.append(templateElement.content);
   }
 }
 
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","./Eventing":"4MHiY","./Attributes":"2VzYh","./Model":"423Hi","./ApiSync":"3hbnv","./Collection":"2s8AK"}],"5gA8y":[function(require,module,exports) {
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5gA8y":[function(require,module,exports) {
 "use strict";
 
 exports.interopDefault = function (a) {
@@ -516,55 +568,35 @@ exports.export = function (dest, destName, get) {
     get: get
   });
 };
-},{}],"4MHiY":[function(require,module,exports) {
+},{}],"5y4Kz":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "Eventing", function () {
-  return Eventing;
+_parcelHelpers.export(exports, "User", function () {
+  return User;
 });
-class Eventing {
-  // object event of strings
-  events = {};
-  on = (eventName, callback) => {
-    const handlers = this.events[eventName] || [];
-    handlers.push(callback);
-    this.events[eventName] = handlers;
-  };
-  trigger = eventName => {
-    const handlers = this.events[eventName];
-    // if handler is undefined or there's no handlers
-    if (!handlers || handlers.length === 0) {
-      return;
-    }
-    // if there are handlers
-    handlers.forEach(callback => {
-      callback();
+var _Model = require('./Model');
+var _Attributes = require('./Attributes');
+var _ApiSync = require('./ApiSync');
+var _Eventing = require('./Eventing');
+var _Collection = require('./Collection');
+const rootUrl = 'http://localhost:3000/users';
+class User extends _Model.Model {
+  // pre configured version of the user
+  static buildUser(attrs) {
+    return new User(new _Attributes.Attributes(attrs), new _Eventing.Eventing(), new _ApiSync.ApiSync(rootUrl));
+  }
+  static buildUserCollection() {
+    return new _Collection.Collection(rootUrl, json => User.buildUser(json));
+  }
+  setRandomAge() {
+    const age = Math.round(Math.random() * 100);
+    this.set({
+      age
     });
-  };
-}
-
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2VzYh":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "Attributes", function () {
-  return Attributes;
-});
-class Attributes {
-  constructor(data) {
-    this.data = data;
-  }
-  get = key => {
-    return this.data[key];
-  };
-  set(update) {
-    Object.assign(this.data, update);
-  }
-  getAll() {
-    return this.data;
   }
 }
 
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"423Hi":[function(require,module,exports) {
+},{"./Model":"423Hi","./Attributes":"2VzYh","./ApiSync":"3hbnv","./Eventing":"4MHiY","./Collection":"2s8AK","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"423Hi":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "Model", function () {
@@ -598,6 +630,27 @@ class Model {
     }).catch(() => {
       this.trigger('error');
     });
+  }
+}
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2VzYh":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Attributes", function () {
+  return Attributes;
+});
+class Attributes {
+  constructor(data) {
+    this.data = data;
+  }
+  get = key => {
+    return this.data[key];
+  };
+  set(update) {
+    Object.assign(this.data, update);
+  }
+  getAll() {
+    return this.data;
   }
 }
 
@@ -2374,7 +2427,34 @@ module.exports = function isAxiosError(payload) {
   return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
-},{}],"2s8AK":[function(require,module,exports) {
+},{}],"4MHiY":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Eventing", function () {
+  return Eventing;
+});
+class Eventing {
+  // object event of strings
+  events = {};
+  on = (eventName, callback) => {
+    const handlers = this.events[eventName] || [];
+    handlers.push(callback);
+    this.events[eventName] = handlers;
+  };
+  trigger = eventName => {
+    const handlers = this.events[eventName];
+    // if handler is undefined or there's no handlers
+    if (!handlers || handlers.length === 0) {
+      return;
+    }
+    // if there are handlers
+    handlers.forEach(callback => {
+      callback();
+    });
+  };
+}
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2s8AK":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "Collection", function () {
