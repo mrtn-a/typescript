@@ -1,7 +1,0 @@
-var _modelsUser = require('./models/User');
-const collection = new _modelsUser.User.buildUserCollection('http://localhost:3000/users', json => {
-  return _modelsUser.User.buildUser(json);
-});
-collection.on('change', () => {
-  console.log(collection);
-});

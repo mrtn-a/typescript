@@ -1,8 +1,0 @@
-var _viewsUserForm = require('./views/UserForm');
-var _modelsUser = require('../models/User');
-const user = _modelsUser.User.buildUser({
-  name: 'NAME',
-  age: 21
-});
-const userForm = new _viewsUserForm.UserForm(document.getElementById('root'), user);
-userForm.render();

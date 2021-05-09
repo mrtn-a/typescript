@@ -1,8 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { Eventing } from './Eventing';
 
-// T type of whatever we are going to store here
-// K- second generic type
 export class Collection<T, K> {
   models: T[] = [];
   events: Eventing = new Eventing();
