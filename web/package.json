@@ -8,5 +8,12 @@
   "scripts": {
     "start:db": "json-server -w db.json",
     "start:parcel": "parcel index.html"
-  }
+  },
+  "name": "web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
